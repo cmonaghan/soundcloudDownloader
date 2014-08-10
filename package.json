@@ -1,0 +1,16 @@
+{
+  "name": "soundcloud-hack",
+  "version": "0.0.0",
+  "description": "",
+  "main": "soundcloud-hack.js",
+  "dependencies": {
+    "exec": "~0.1.1",
+    "request": "~2.36.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
