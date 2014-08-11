@@ -1,8 +1,10 @@
-// You can modify the directory to download your songs to here:
+// Modify the below variables as necessary
 var DOWNLOAD_DIR = './downloads/'; // make sure this directory has a trailing slash
+var soundcloudUsername = 'christianmonaghan';
 
-// API url
+// APIs
 var sounddrainApiUrl = 'http://www.sounddrain.com/sounddrain_api/';
+var soundcloudClientId = '774690d4074340ca740c4aa5e50de56d'; // this the app id for using the soundcloud API
 
 // Dependencies
 var fs = require('fs');
@@ -11,6 +13,8 @@ var https = require('https');
 var path = require('path');
 var request = require('request');
 var exec = require('exec');
+var sanitize = require('sanitize-filename');
+var _ = require('underscore');
 
 
 // Create the download directory if it doesn't exist
@@ -21,14 +25,64 @@ var child = exec(mkdir, function(err, stdout, stderr) {
   }
 });
 
-// grab the url arguments from the command line
-var songUrls = Array.prototype.slice.call(process.argv, 2);
+downloadFavorites(soundcloudUsername);
 
-// call the download function for each url in the songUrls array
-for (var i = 0; i < songUrls.length; i++) {
-  console.log('downloading ' + songUrls[i] + ' ...');
-  downloadSongFromSoundcloud(songUrls[i]);
-};
+
+// MASTER FUNCTION //
+
+function downloadFavorites(username) {
+  findUserFavorites(username, downloadCb);
+
+  function downloadCb(favoritesUrls) {
+    // call the download function for each url in the songUrls array
+    for (var i = 0; i < favoritesUrls.length; i++) {
+      console.log('downloading ' + favoritesUrls[i] + ' ...');
+      downloadSongFromSoundcloud(favoritesUrls[i]);
+    };
+  }
+}
+
+
+// HELPERS //
+
+function findUserFavorites(username, cb) {
+  // finds the integer user id associated with the username
+  var resolveUrl = 'http://api.soundcloud.com/resolve.json?url=http://soundcloud.com/'
+    + username + '&client_id=' + soundcloudClientId;
+
+  request.get(
+    resolveUrl,
+    function(err, response, body) {
+      if (err) {
+        console.error(err);
+      }
+
+      body = JSON.parse(body);
+
+      fetchFavorites(body.id);
+    }
+  );
+
+  function fetchFavorites(userIdInteger) {
+    var favoritesUrl = 'http://api.soundcloud.com/users/' + userIdInteger
+      + '/favorites.json?client_id=' + soundcloudClientId;
+
+    request.get(
+      favoritesUrl,
+      function(err, response, body) {
+        if (err) {
+          console.error(err);
+        }
+
+        body = JSON.parse(body);
+
+        var scFavoritesUrls = _.pluck(body, 'permalink_url');
+
+        cb(scFavoritesUrls);
+      }
+    );
+  }
+}
 
 function downloadSongFromSoundcloud(songUrl) {
   // Query the sounddrain API for a link to download the song
@@ -43,7 +97,7 @@ function downloadSongFromSoundcloud(songUrl) {
       body = JSON.parse(body);
       // console.log('The sounddrain API response is:', body);
 
-      downloadSong(body.url, body.title);
+      downloadSong(body.url, sanitize(body.title)); // TODO: escape the title
     }
   );
 
