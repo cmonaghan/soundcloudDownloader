@@ -1,5 +1,5 @@
 // You can modify the directory to download your songs to here:
-var DOWNLOAD_DIR = './'; // make sure this directory has a trailing slash
+var DOWNLOAD_DIR = './downloads/'; // make sure this directory has a trailing slash
 
 // API url
 var sounddrainApiUrl = 'http://www.sounddrain.com/sounddrain_api/';
@@ -53,18 +53,24 @@ function downloadSongFromSoundcloud(songUrl) {
     var fileExt = path.extname( url.parse(songUrl).pathname.split('/').pop() );
     songTitle += fileExt; // adds the file extension to the song title
 
-    // @TODO: check if this file already exists, so we don't re-download something we already have
-    var file = fs.createWriteStream(DOWNLOAD_DIR + songTitle);
+    // check if this file already exists, so we don't re-download something we already have
+    fs.exists(DOWNLOAD_DIR + songTitle, function(exists) {
+      if (exists) {
+        console.log('This file was not downloaded because it already exists:', songTitle);
+      } else {
+        var file = fs.createWriteStream(DOWNLOAD_DIR + songTitle);
 
-    https.get(songUrl, function(res) {
-      res.on('data', function(data) {
-        file.write(data);
-      }).on('end', function() {
-        file.end();
-        console.log('Success! Downloaded ' + songTitle + ' to ' + DOWNLOAD_DIR);
-      });
-    }).on('error', function(err) {
-      console.error(err);
+        https.get(songUrl, function(res) {
+          res.on('data', function(data) {
+            file.write(data);
+          }).on('end', function() {
+            file.end();
+            console.log('Success! Downloaded ' + songTitle + ' to ' + DOWNLOAD_DIR);
+          });
+        }).on('error', function(err) {
+          console.error(err);
+        });
+      }
     });
   };
 };
