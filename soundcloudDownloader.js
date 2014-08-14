@@ -1,10 +1,10 @@
 // Modify the below variables as necessary
 var DOWNLOAD_DIR = './downloads/'; // make sure this directory has a trailing slash
-var soundcloudUsername = 'christianmonaghan';
+var soundcloudUsername = 'davidpinter';
 
 // APIs
 var sounddrainApiUrl = 'http://www.sounddrain.com/sounddrain_api/';
-var soundcloudClientId = '774690d4074340ca740c4aa5e50de56d'; // this the app id for using the soundcloud API
+var soundcloudClientId = '774690d4074340ca740c4aa5e50de56d'; // the app id for using the soundcloud API
 
 // Dependencies
 var fs = require('fs');
@@ -25,7 +25,8 @@ var child = exec(mkdir, function(err, stdout, stderr) {
   }
 });
 
-downloadFavorites(soundcloudUsername);
+downloadFavorites(soundcloudUsername); // downloads all user's favorites
+// downloadSongFromSoundcloud('https://soundcloud.com/ansahuk/ansah-sanctify'); // downloads an individual track
 
 
 // MASTER FUNCTION //
@@ -97,7 +98,7 @@ function downloadSongFromSoundcloud(songUrl) {
       body = JSON.parse(body);
       // console.log('The sounddrain API response is:', body);
 
-      downloadSong(body.url, sanitize(body.title)); // TODO: escape the title
+      downloadSong(body.url, sanitize(body.title));
     }
   );
 
@@ -105,7 +106,8 @@ function downloadSongFromSoundcloud(songUrl) {
   function downloadSong(songUrl, songTitle) {
     // grabs the extension name (ie - '.mp3')
     var fileExt = path.extname( url.parse(songUrl).pathname.split('/').pop() );
-    songTitle += fileExt; // adds the file extension to the song title
+    fileExt = fileExt || '.mp3'; // in case an extension isn't found, use .mp3
+    songTitle += fileExt;
 
     // check if this file already exists, so we don't re-download something we already have
     fs.exists(DOWNLOAD_DIR + songTitle, function(exists) {

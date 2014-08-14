@@ -2,15 +2,12 @@
 
 ### Here's how to use this tool:
   1. Run `npm install`
-  2. Copy the url of a song on soundcloud that you'd like to download
-  3. From the command line, type `node soundcloudDownloader.js '[desired song url]'`
-  4. Profit!
+  2. Modify the first two variables `DOWNLOAD_DIR` and `soundcloudUsername`.
+  3. From the command line, type `node soundcloudDownloader.js`
+  4. Watch the magic before your eyes!
+
 
 ### Notes:
-test run:
-
-    node soundcloudDownloader.js 'https://soundcloud.com/jthunder/we-make-it-better-rolling-in' 'https://soundcloud.com/xaanti/my-heart-club-mix'
-
 
 To get soundcloud user id:
 
@@ -23,3 +20,5 @@ To get soundcloud user favorites:
 
 TODO:
 - spread out requests to sounddrain API so as not to overload it
+- alert user if song not downloaded because no file extension found
+- alert user when all downloads complete (with success count & failure count)
