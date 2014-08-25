@@ -1,11 +1,14 @@
 {
-  "name": "soundcloud-hack",
+  "name": "soundcloudDownloader",
   "version": "0.0.0",
   "description": "",
-  "main": "soundcloud-hack.js",
+  "main": "soundcloudDownloader.js",
   "dependencies": {
     "exec": "~0.1.1",
-    "request": "~2.36.0"
+    "request": "~2.36.0",
+    "bluebird": "~2.3.0",
+    "underscore": "~1.6.0",
+    "sanitize-filename": "~1.1.1"
   },
   "devDependencies": {},
   "scripts": {
