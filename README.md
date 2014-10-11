@@ -2,9 +2,15 @@
 
 ### Here's how to use this tool:
   1. Run `npm install`
-  2. Modify the first two variables `DOWNLOAD_DIR` and `soundcloudUsername`.
+  2. Modify the first two variables `DOWNLOAD_DIR` and `soundcloudUsername` in config.js.
   3. From the command line, type `node soundcloudDownloader.js`
   4. Watch the magic before your eyes!
+
+
+### Running tests
+Unit tests use jasmine.
+
+    npm test
 
 
 ### Notes:
