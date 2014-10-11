@@ -4,25 +4,19 @@ var request = Promise.promisifyAll(require('request')); // converts request to u
 var _ = require('underscore');
 
 function findUserFavorites(username, scClientId) {
+  var promise = getUserId(username, scClientId)
+    .then(function(userId) {
+      return getUserFavoritesUrls(userId, scClientId);
+    });
 
-  return getUserId(username, scClientId).then(function(userIdInteger) {
-    console.log('userIdInteger', userIdInteger);
-    var favoritesUrl = 'http://api.soundcloud.com/users/' + userIdInteger
-      + '/favorites.json?client_id=' + scClientId;
-
-    return request.getAsync(favoritesUrl);
-  }).then(function(responseArr){
-    var body = responseArr[0].body;
-    body = JSON.parse(body);
-    var scFavoritesUrls = _.pluck(body, 'permalink_url');
-    return scFavoritesUrls;
-  });
+  return promise;
 }
 
-// helpers
+
+// Helpers
 
 /**
- * Finds the integer user id associated with the user (necessary for fetching
+ * Gets the integer user id associated with the user (necessary for fetching
  * favorites)
  *
  * @params:
@@ -40,11 +34,36 @@ function getUserId(username, scClientId) {
   return promise;
 }
 
-// meta-helpers
+/**
+ * Gets the urls of the user's soundcloud favorites
+ *
+ * @params:
+ * {userId} (the user's numeric id. ie - 4071686)
+ * {scClientId} (this is an app id specific to this application. found in config.js)
+ */
+function getUserFavoritesUrls(userId, scClientId) {
+  var favoritesUrl = buildFavoritesUrl(userId, scClientId);
+  var promise = request.getAsync(favoritesUrl).then(function(responseArr){
+    var body = responseArr[0].body;
+    body = JSON.parse(body);
+    var scFavoritesUrls = _.pluck(body, 'permalink_url');
+    return scFavoritesUrls;
+  });
+
+  return promise;
+}
+
+
+// Meta-helpers
 
 function buildResolveUrl(username, scClientId) {
   return 'http://api.soundcloud.com/resolve.json?url=http://soundcloud.com/' +
     username + '&client_id=' + scClientId;
+}
+
+function buildFavoritesUrl(userId, scClientId) {
+  return 'http://api.soundcloud.com/users/' + userId +
+    '/favorites.json?client_id=' + scClientId;
 }
 
 module.exports = findUserFavorites;
