@@ -5,8 +5,7 @@ var _ = require('underscore');
 
 function findUserFavorites(username, scClientId) {
   // finds the integer user id associated with the username
-  var resolveUrl = 'http://api.soundcloud.com/resolve.json?url=http://soundcloud.com/'
-    + username + '&client_id=' + scClientId;
+  var resolveUrl = buildResolveUrl(username, scClientId);
 
   return request.getAsync(resolveUrl).then(function(responseArr){
     var body = responseArr[0].body;
@@ -23,6 +22,12 @@ function findUserFavorites(username, scClientId) {
     var scFavoritesUrls = _.pluck(body, 'permalink_url');
     return scFavoritesUrls;
   });
+}
+
+// helpers
+function buildResolveUrl(username, scClientId) {
+  return 'http://api.soundcloud.com/resolve.json?url=http://soundcloud.com/' +
+    username + '&client_id=' + scClientId;
 }
 
 module.exports = findUserFavorites;
