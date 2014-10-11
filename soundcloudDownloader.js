@@ -3,7 +3,7 @@ var exec = require('exec');
 var _ = require('underscore');
 
 var config = require('./config');
-var findUserFavorites = require('./findUserFavorites');
+var soundcloudUtility = require('./soundcloudUtility');
 var downloadSong = require('./downloadSong');
 
 // Create the download directory if it doesn't exist
@@ -15,9 +15,9 @@ var child = exec(mkdir, function(err, stdout, stderr) {
 });
 
 // downloads all user's favorites
-findUserFavorites(config.scUsername, config.scClientId).then(function(urls){
+soundcloudUtility.fetchUserFavoriteUrls(config.scUsername, config.scClientId).then(function(urls){
   console.log(urls);
-  _.each(urls, function(url) {
-    downloadSong(url);
-  });
+  // _.each(urls, function(url) {
+  //   downloadSong(url);
+  // });
 });
