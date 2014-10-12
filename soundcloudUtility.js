@@ -9,7 +9,7 @@ var soundcloudUtility = {
     var self = this;
     var promise = this.getUserId(username, scClientId)
       .then(function(userId) {
-        return self.getUserFavoritesUrls(userId, scClientId);
+        return self.getFavoritesUrls(userId, scClientId);
       });
 
     return promise;
@@ -43,7 +43,7 @@ var soundcloudUtility = {
    * @param {userId} (the user's numeric id. ie - 4071686)
    * @param {scClientId} (this is an app id specific to this application. found in config.js)
    */
-  getUserFavoritesUrls: function(userId, scClientId) {
+  getFavoritesUrls: function(userId, scClientId) {
     var favoritesUrl = buildFavoritesUrl(userId, scClientId);
     var promise = request.getAsync(favoritesUrl).then(function(responseArr){
       var body = responseArr[0].body;
