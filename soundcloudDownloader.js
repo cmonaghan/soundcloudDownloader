@@ -15,7 +15,7 @@ var child = exec(mkdir, function(err, stdout, stderr) {
 });
 
 // downloads all user's favorites
-soundcloudUtility.fetchUserFavoriteUrls(config.scUsername, config.scClientId).then(function(urls){
+soundcloudUtility.fetchUserFavoriteUrls(config.soundcloudUsername, config.soundcloudAppId).then(function(urls){
   console.log(urls);
   // _.each(urls, function(url) {
   //   downloadSong(url);

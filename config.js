@@ -1,10 +1,11 @@
 var config = {
-  // Modify 'DOWNLOAD_DIR' and 'soundcloudUsername' as necessary
+  // Modify these
   DOWNLOAD_DIR: './downloads/', // make sure this directory has a trailing slash
-  scUsername: 'christianmonaghan',
+  soundcloudUsername: 'christianmonaghan',
 
+  // Don't modify these
   sounddrainApiUrl: 'http://www.sounddrain.com/sounddrain_api/',
-  scClientId: '774690d4074340ca740c4aa5e50de56d', // the app id for using the soundcloud API
+  soundcloudAppId: '774690d4074340ca740c4aa5e50de56d', // the app id for using the soundcloud API
 };
 
 module.exports = config;
