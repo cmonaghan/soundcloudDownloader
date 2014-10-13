@@ -1,4 +1,4 @@
-var downloadSong = require('../downloadSong');
+var downloadSong = require('../downloadSongUtility');
 
 describe('downloadSongUtility', function() {
 

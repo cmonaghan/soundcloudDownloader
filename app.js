@@ -5,6 +5,7 @@ var config = require('./config');
 var directoryUtility = require('./directoryUtility');
 var soundcloudUtility = require('./soundcloudUtility');
 var downloadSongUtility = require('./downloadSongUtility');
+var sounddrainApiUtility = require('./sounddrainApiUtility');
 
 directoryUtility.createRelativeDirectory(config.DOWNLOAD_DIR);
 
