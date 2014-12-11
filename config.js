@@ -1,7 +1,7 @@
 var config = {
   // Modify these
   DOWNLOAD_DIR: './downloads/', // make sure this directory has a trailing slash
-  soundcloudUsername: 'christianmonaghan',
+  soundcloudUsername: 'davidpinter',
 
   // Don't modify these
   sounddrainApiUrl: 'http://www.sounddrain.com/sounddrain_api/',

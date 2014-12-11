@@ -3,7 +3,7 @@ var sounddrainApiUtility = require('../sounddrainApiUtility');
 describe('sounddrainApiUtility', function() {
 
   describe('#getDownloadUrl', function() {
-    var soundcloudSongUrl = 'http://soundcloud.com/naturesounds/blu-the-return';
+    var soundcloudSongUrl = 'https://soundcloud.com/naturesounds/blu-the-return';
     var downloadUrl;
     var songTitle;
     beforeEach(function(done) {
