@@ -13,6 +13,6 @@ directoryUtility.createRelativeDirectory(config.DOWNLOAD_DIR);
 soundcloudUtility.fetchUserFavoriteUrls(config.soundcloudUsername, config.soundcloudAppId).then(function(urls){
   console.log(urls);
   _.each(urls, function(url) {
-    downloadSongUtility(url);
+    sounddrainApiUtility.getDownloadUrl(url).spread(downloadSongUtility);
   });
 });

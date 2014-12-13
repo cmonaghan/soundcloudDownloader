@@ -24,6 +24,8 @@ To get soundcloud user favorites:
     curl 'http://api.soundcloud.com/users/4071686/favorites.json?client_id=774690d4074340ca740c4aa5e50de56d'
 
 
+Sounddrain's client_id is b45b1aa10f1ac2941910a7f0d10f8e28 (in case we want to query on their behalf...)
+
 TODO:
 - spread out requests to sounddrain API so as not to overload it
 - alert user if song not downloaded because no file extension found

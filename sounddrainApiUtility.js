@@ -11,6 +11,7 @@ var sounddrainApiUtility = {
 
   // Query the sounddrain API for a link to download the song
   getDownloadUrl: function(soundcloudSongUrl) {
+    debugger; // is soundcloudSongUrl defined?
     var promise = request.postAsync(
       config.sounddrainApiUrl, // url we're POSTing to
       { form: {url: soundcloudSongUrl} } // form data to POST
@@ -23,10 +24,7 @@ var sounddrainApiUtility = {
       fileExt = fileExt || '.mp3'; // in case an extension isn't found, use .mp3
       var songTitle = sanitize(body.title) + fileExt;
 
-      return {
-        sanitizedSongTitle: songTitle,
-        downloadUrl: body.url
-      }
+      return [body.url, songTitle]; // passes two params to the next promise when caught with spread()
     });
     return promise;
   }
